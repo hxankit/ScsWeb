@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "scsdata-465914",
+  "private_key_id": "45d3cb642ec4220133481061672cc889af883ffe",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDA4yZGP1Qtu87Q\n0LuqdM4XAzU/3ASpjoo/E3URyQ0xNzxYsAqH6lxJCfoO4DX3vUNf4yL+ORdvzVU4\ncPT0KwtmWbote3dIZhy1AyZvWAcXqUIyzOseFYdMbYk5LFrZrLUynqEW9TncD4vp\nBTpJHlC4rP04mPj99DKUXgagFEKM2JHeBLYLnZOfM5AT9vIjZdraP4jYKBz3Ox18\nRhH1mQSlpFjN82R8maV+5iymaObUi2BgG6K4xInq5PePmqPQiItOgzN/wvcA4BuR\nds06hPxWfp4LPCZuAOwmuECCJYtU3Wpdc8EQregMcaXRUn1m7+oTPwu0QvSex5uh\nlWyuAW23AgMBAAECggEAFr8Sxej089m4d26OGvlgTl1t+6RmFlq9WdfhD+JeQGYL\no0fLTiDoliJrjzKImrkCh33BJCq2ZVRZDulfMaYb14uQRYnQVMTZ8My4zRub5oHq\n0RPSTD9sr6ohKxFce1v/GEOVqp/rnVRmAuo/Z9z/1u9rgy+i+UvBZTa7YEhTWsmA\n1ms4maUXyXc5PixkH5XHDUhTKebkQK+m7TbmM2SOh5jDKg+Zt5qKNLA9d/P/h/cG\nPi7djzQ6RrX6SqDEFoOSr7vlrCG46VeI48NeOPcfwx7+uaTf8v5WA7m8vaSwKZWt\nlpsf6QvOKmjonuvEa8WPfbYEG4j4SdixKbLQqLgg3QKBgQDrhBUtzosPHGWo7Lab\nfjerWcocmK9zFbKhqdL+3wEaqXlKjGGhVmBR0HjXg/P+60PFrpqRT2RYmjV6PHVI\nQqruZLnaP5BBWzl6H2QsYqRwYyF1j6aWRfp0399LhVVArSApHoxG6z87P8fTOYFQ\n3tZZWG0xISf5vgbubwihr9S64wKBgQDRqel4RvQYaIlYeXYF2zFPrg7jiXxE3cbW\nDoJltO9Uyez9K3/7YynycBbXFz7IFIV9Z53+chxr2PukUzGXALOnkaxq9GWetNtO\nk17dLzbLYBGfpGxJjnxBUMKEOGgF8ltRTTCykUtCHbL6/ltKU1VttWMb9cNbHBQh\n7jttnWBWHQKBgQDDg+UpH9wlcUeb0tdNgpyobWPyFXchrROcTaVR3MPH5IVCtAOg\nslpH0S9girSWHa0ngOnkU+pT+8EFdwdOM7o/KfN4EWiqORcgIMtCZalpe4IdXGHJ\nQtLHD8sJoOjDRnX6bNe7UDQv9aTn30dRYYzEozoSnRnYpD6Q1jBuOc/6TQKBgBKV\nffVETMSRF4N5GKYCPMe0ROuUNyifg81bceFz/TbFwzTZkzmEG6a6mrur+sufTgnE\nknOIR86jaAKzwRSCYmo69k5wpUVBAKNhWqo+UhwKwuUknNiUQZ1EfEld+pJ0XfXB\n4swhJsuQeFnZC9x1sH/N8R/8U7mSrpInXKslpPFdAoGAQY0DGfShIVnEMQCa2vpA\nXm2kb4uJv2gioHSkDa5R9YhcpSdGFNNZjuzQYedf2Bk8Ato6H5W0/s4PqLCZtkKz\nwMqm3SaIKTRo4GfMoZObmBwhNZeP+yGcxt5xAN6AUO3sFC7o5hVI/p3iXQu+6+zc\nRYdkdXKdBmtLlxzf+HpemG4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "scs-technologies@scsdata-465914.iam.gserviceaccount.com",
+  "client_id": "111978696576081514014",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/scs-technologies%40scsdata-465914.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
