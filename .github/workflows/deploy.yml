@@ -32,4 +32,4 @@ jobs:
 
       - name: Upload project via scp
         run: |
-          scp -r ./Backend/* ${{ secrets.AZURE_USERNAME }}@${{ secrets.AZURE_HOST }}:/home/site/wwwroot/
+          scp -r ./Backend/* ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/site/wwwroot/
