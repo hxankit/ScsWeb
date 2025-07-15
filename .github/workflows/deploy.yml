@@ -1,0 +1,46 @@
+name: Deploy Fullstack App to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Install frontend dependencies and build
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+
+      # Install backend dependencies
+      - name: Install backend dependencies
+        run: npm install
+
+      # Copy frontend build to backend
+      - name: Move frontend build into backend
+        run: |
+          rm -rf backend/build
+          cp -r frontend/build backend/build
+
+      # Zip entire backend folder
+      - name: Zip backend (with frontend inside)
+        run: |
+          cd backend
+          zip -r ../app.zip .
+
+      # Deploy to Azure
+      - name: Deploy via ZipDeploy
+        run: |
+          curl -X POST https://${{ secrets.AZURE_APP_NAME }}.scm.azurewebsites.net/api/zipdeploy \
+          --user ${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }} \
+          --data-binary @app.zip
