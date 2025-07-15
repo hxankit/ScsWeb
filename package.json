@@ -4,11 +4,16 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "build:frontend": "npm run build --prefix Frontend",
-    "start:backend": "nodemon --env-file=.env ./Backend/main.js",
-    "dev": "concurrently \"npm run build:frontend\" \"npm run start:backend\""
+    "scripts": {
+    "start": "node Backend/main.js",
+    "build:frontend": "cd Frontend && npm install && npm run build",
+    "prepare:dist": "rm -rf Backend/dist && cp -r Frontend/dist Backend/",
+    "install:backend": "npm install --production",
+    "zip:all": "zip -r scs-app.zip .",
+    "deploy": "npm run build:frontend && npm run prepare:dist && npm run zip:all",
+    "dev": "concurrently \"npm run build:frontend\" \"npm run start\""
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,6 +21,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "googleapis": "^152.0.0",
+    "mongoose": "^8.16.3",
     "nodemon": "^3.1.10"
   },
   "devDependencies": {

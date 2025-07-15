@@ -13,6 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install root & backend dependencies
+        run: npm install
+
       - name: Install frontend dependencies
         working-directory: ./Frontend
         run: npm install
@@ -21,14 +24,11 @@ jobs:
         working-directory: ./Frontend
         run: npm run build
 
-      - name: Install backend dependencies
-        run: npm install --production
-
-      - name: Zip entire project (includes Frontend & Backend)
+      - name: Zip entire project (includes Frontend and Backend)
         run: zip -r scs-app.zip .
 
       - name: Deploy via ZipDeploy to Azure Web App
         run: |
-          curl -X POST https://${{ secrets.AZURE_APP_NAME }}.canadacentral-01.azurewebsites.net/api/zipdeploy \
-          --user ${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }} \
-          --data-binary @scs-app.zip
+          curl -X POST https://${{ secrets.AZURE_APP_NAME }}.scm.azurewebsites.net/api/zipdeploy \
+            --user ${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }} \
+            --data-binary @scs-app.zip
