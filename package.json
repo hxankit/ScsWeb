@@ -5,10 +5,12 @@
   "main": "index.js",
   "type": "module",
     "scripts": {
-    "start": "node Backend/main.js",                  
-    "install:frontend": "cd Frontend && npm install", 
-    "build:frontend": "cd Frontend && npm run build", 
-    "install:backend": "cd Backend && npm install"    
+    "build:frontend": "cd Frontend && npm install && npm run build",
+    "install:backend": "npm install",
+    "start": "node main.js",
+    "dev": "concurrently \"npm run build:frontend\" \"npm run start\"",
+    "test":"nodemon --env-file=.env main.js"
+
   },
 
   "keywords": [],
