@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -13,27 +14,22 @@ jobs:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
 
-      - name: 🧩 Install root and backend dependencies
+      - name: 🔧 Install root (backend) dependencies
         run: npm install
 
-      - name: 🧩 Install frontend dependencies
+      - name: 🌐 Install frontend dependencies
         working-directory: ./Frontend
         run: npm install
 
-      - name: ⚙️ Build frontend
+      - name: ⚙️ Build frontend (Vite)
         working-directory: ./Frontend
         run: npm run build
 
-      - name: 📁 Ensure dist is in place
-        run: |
-          rm -rf Backend/dist
-          cp -r Frontend/dist Backend/
+      - name: 🗜️ Zip backend with frontend dist in place
+        run: zip -r scs-app.zip . -x ".git/*" "node_modules/*" "Frontend/node_modules/*"
 
-      - name: 🗜️ Zip entire project (Frontend + Backend)
-        run: zip -r scs-app.zip .
-
-      - name: 🚀 Deploy to Azure via ZipDeploy
+      - name: 🚀 Deploy to Azure Web App
         run: |
-          curl -X POST https://${{ secrets.AZURE_APP_NAME }}.canadacentral-01.azurewebsites.net/api/zipdeploy \
-            --user ${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }} \
-            --data-binary @scs-app.zip
+          curl -X POST "https://${{ secrets.AZURE_APP_NAME }}.canadacentral-01.azurewebsites.net/api/zipdeploy" \
+          --user "${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }}" \
+          --data-binary @scs-app.zip
