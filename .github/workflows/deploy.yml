@@ -1,0 +1,29 @@
+name: Deploy to Azure App Service via ZipDeploy
+
+on:
+  push:
+    branches:
+      - main  # or your deployment branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Build (if needed)
+        run: |
+          npm install
+          npm run build
+
+      - name: Zip the output
+        run: |
+          zip -r app.zip .
+
+      - name: Deploy via ZipDeploy
+        run: |
+          curl -X POST https://${{ secrets.AZURE_APP_NAME }}.scm.azurewebsites.net/api/zipdeploy \
+          --user ${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }} \
+          --data-binary @app.zip
