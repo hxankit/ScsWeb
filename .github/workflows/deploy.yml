@@ -1,0 +1,58 @@
+name: Deploy MERN App to Server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: 📁 Install Frontend and Build
+        run: |
+          cd Frontend
+          npm install
+          npm run build
+
+      - name: 🚚 Move build to Backend
+        run: |
+          rm -rf Backend/dist
+          mv Frontend/dist Backend/
+
+      - name: 🔧 Install Backend dependencies
+        run: |
+          npm install  # Since your backend package.json is in root
+
+      - name: 📦 Archive project
+        run: |
+          cd Backend
+          zip -r ../app.zip .
+
+      - name: 🔐 Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: 📤 Upload to server
+        run: |
+          scp -P ${{ secrets.SSH_PORT }} app.zip ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/site/wwwroot/
+
+      - name: 🖥️ SSH and deploy
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /home/site/wwwroot/
+            unzip -o app.zip
+            rm app.zip
+            pm2 restart backend || pm2 start backend/main.js --name backend
+          EOF
