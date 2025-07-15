@@ -1,35 +1,33 @@
-name: Deploy Fullstack App to Azure App Service
+name: 🚀 Deploy Fullstack App to Azure App Service
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout code
+      - name: 📦 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔧 Install root (backend) dependencies
+      - name: 🔧 Install backend dependencies (root)
         run: npm install
 
-      - name: 🌐 Install frontend dependencies
+      - name: 🧩 Install frontend dependencies
         working-directory: ./Frontend
         run: npm install
 
-      - name: ⚙️ Build frontend (Vite)
-        working-directory: ./Frontend
-        run: npm run build
+      - name: ⚙️ Build frontend
+        run: npm run build:frontend
 
-      - name: 🗜️ Zip backend with frontend dist in place
-        run: zip -r scs-app.zip . -x ".git/*" "node_modules/*" "Frontend/node_modules/*"
+      - name: 🗜️ Zip full project for Azure deployment
+        run: zip -r scs-app.zip .
 
-      - name: 🚀 Deploy to Azure Web App
+      - name: 🚀 Deploy to Azure via ZipDeploy
         run: |
-          curl -X POST "https://${{ secrets.AZURE_APP_NAME }}.canadacentral-01.azurewebsites.net/api/zipdeploy" \
-          --user "${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }}" \
-          --data-binary @scs-app.zip
+          curl -X POST https://${{ secrets.AZURE_APP_NAME }}.mexicocentral-01.azurewebsites.net/api/zipdeploy \
+            --user ${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }} \
+            --data-binary @scs-app.zip
