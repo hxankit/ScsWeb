@@ -5,13 +5,10 @@
   "main": "index.js",
   "type": "module",
     "scripts": {
-    "start": "node Backend/main.js",
-    "build:frontend": "cd Frontend && npm install && npm run build",
-    "prepare:dist": "rm -rf Backend/dist && cp -r Frontend/dist Backend/",
-    "install:backend": "npm install --production",
-    "zip:all": "zip -r scs-app.zip .",
-    "deploy": "npm run build:frontend && npm run prepare:dist && npm run zip:all",
-    "dev": "concurrently \"npm run build:frontend\" \"npm run start\""
+    "start": "node Backend/main.js",                  
+    "install:frontend": "cd Frontend && npm install", 
+    "build:frontend": "cd Frontend && npm run build", 
+    "install:backend": "cd Backend && npm install"    
   },
 
   "keywords": [],

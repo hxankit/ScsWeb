@@ -10,25 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: ⬇️ Checkout code
         uses: actions/checkout@v4
 
-      - name: Install root & backend dependencies
+      - name: 🧩 Install root and backend dependencies
         run: npm install
 
-      - name: Install frontend dependencies
+      - name: 🧩 Install frontend dependencies
         working-directory: ./Frontend
         run: npm install
 
-      - name: Build frontend
+      - name: ⚙️ Build frontend
         working-directory: ./Frontend
         run: npm run build
 
-      - name: Zip entire project (includes Frontend and Backend)
+      - name: 📁 Ensure dist is in place
+        run: |
+          rm -rf Backend/dist
+          cp -r Frontend/dist Backend/
+
+      - name: 🗜️ Zip entire project (Frontend + Backend)
         run: zip -r scs-app.zip .
 
-      - name: Deploy via ZipDeploy to Azure Web App
+      - name: 🚀 Deploy to Azure via ZipDeploy
         run: |
-          curl -X POST https://${{ secrets.AZURE_APP_NAME }}.canadacentral-01.azurewebsites.net/api/zipdeploy \
+          curl -X POST https://${{ secrets.AZURE_APP_NAME }}.scm.azurewebsites.net/api/zipdeploy \
             --user ${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }} \
             --data-binary @scs-app.zip
