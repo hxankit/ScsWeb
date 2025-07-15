@@ -11,36 +11,24 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Install frontend dependencies and build
       - name: Install frontend dependencies
-        working-directory: ./frontend
+        working-directory: ./Frontend
         run: npm install
 
       - name: Build frontend
-        working-directory: ./frontend
+        working-directory: ./Frontend
         run: npm run build
 
-      # Install backend dependencies
       - name: Install backend dependencies
-        run: npm install
+        run: npm install --production
 
-      # Copy frontend build to backend
-      - name: Move frontend build into backend
-        run: |
-          rm -rf backend/build
-          cp -r frontend/build backend/build
+      - name: Zip entire project (includes Frontend & Backend)
+        run: zip -r scs-app.zip .
 
-      # Zip entire backend folder
-      - name: Zip backend (with frontend inside)
-        run: |
-          cd backend
-          zip -r ../app.zip .
-
-      # Deploy to Azure
-      - name: Deploy via ZipDeploy
+      - name: Deploy via ZipDeploy to Azure Web App
         run: |
           curl -X POST https://${{ secrets.AZURE_APP_NAME }}.scm.azurewebsites.net/api/zipdeploy \
           --user ${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASSWORD }} \
-          --data-binary @app.zip
+          --data-binary @scs-app.zip
