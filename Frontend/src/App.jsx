@@ -6,6 +6,7 @@ import ContactSection from './components/pages/ContactUs';
 import NotFoundPage from './components/pages/NotFound';
 import AboutSection from './components/pages/AboutPage';
 import ServicesPage from './components/pages/Services';
+import ComingSoon from './components/pages/CommingSoon';
 
 
 
@@ -17,6 +18,8 @@ function App() {
         <Route path="/about" element={<AboutSection />} />
         <Route path="/contact" element={<ContactSection />} />
         <Route path="/Services" element={<ServicesPage />} />
+        <Route path="/courses" element={<ComingSoon />} />
+        <Route path="/traning" element={<ComingSoon />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

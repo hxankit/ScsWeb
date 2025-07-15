@@ -1,0 +1,48 @@
+name: Deploy SCS Tech App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: ⬇️ Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🔐 Setup SSH
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEY }}
+
+    - name: 🛠️ Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: 📦 Install Frontend Dependencies
+      run: npm install --prefix Frontend
+
+    - name: 🛠️ Build Frontend
+      run: npm run build --prefix Frontend
+
+    - name: 📦 Install Backend Dependencies
+      run: npm install
+
+    - name: 📁 Transfer files to server
+      run: |
+        rsync -avz --exclude=node_modules --exclude=Frontend/node_modules ./ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/${{ secrets.USERNAME }}/scstechnologies-app
+
+    - name: 🚀 Restart App on Server via SSH
+      run: |
+        ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
+          cd /home/${{ secrets.USERNAME }}/scstechnologies-app
+          echo "PORT=${{ secrets.PORT }}" > .env
+          echo "SHEET_ID=${{ secrets.SHEET_ID }}" >> .env
+          npm install
+          pm2 delete scs-backend || true
+          pm2 start Backend/main.js --name scs-backend
+          pm2 save
+        EOF
