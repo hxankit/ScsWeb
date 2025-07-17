@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 import { fileURLToPath } from 'url';
 import contactRouter from './Backend/routes/contact.routes.js';
 import coursesRouter from './Backend/routes/courses.routes.js';
+import adminRouter from './Backend/routes/Admin.routes.js';
 import { connectdb } from './Backend/middlewars/connect.db.js';
 
 const app = express()
@@ -14,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS
+app.use(cookieParser())
 app.use(cors({
     origin: 'http://localhost:5173',
     methods: ['GET', 'POST'],
@@ -24,6 +27,7 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, './Frontend/dist')));
 
 // APIs
+app.use("/api",adminRouter)
 app.use("/api/", contactRouter);
 app.use("/api/courses", coursesRouter);
 
@@ -32,12 +36,13 @@ app.get("/test", (req, res) => {
 });
 
 // ❗Fallback for SPA (must be after API routes)
-app.use((req, res) => {
-    res.sendFile(path.join(__dirname, './Frontend/dist', 'index.html'));
-});
+// app.use((req, res) => {
+//     res.sendFile(path.join(__dirname, './Frontend/dist', 'index.html'));
+// });
 
 // Start server
 const PORT = process.env.PORT || 5000;
+console.log(process.env.PORT)
 connectdb()
     .then(() => {
         app.listen(PORT, () => {
