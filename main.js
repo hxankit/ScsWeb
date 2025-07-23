@@ -11,7 +11,7 @@ import dotenv from "dotenv"
 
 const app = express()
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __dirname = path.dirname(__filename);
 dotenv.config()
 // Middleware
 app.use(express.json());
@@ -20,7 +20,7 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'Backend/uploads')))
 // CORS
 app.use(cookieParser())
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:5173,http://scstechnologies.in,https://scstechnologies.in',
     
     credentials: true,
 }));
@@ -35,12 +35,12 @@ app.use("/api/courses", coursesRouter);
 app.get("/test", (req, res) => {
     res.json("This is Server");
 });
-app.use(express.static(path.join(__dirname, './Frontend/dist')));
+// app.use(express.static(path.join(__dirname, './Frontend/dist')));
 
-// ❗Fallback for SPA (must be after API routes)
-app.use((req, res) => {
-    res.sendFile(path.join(__dirname, './Frontend/dist', 'index.html'));
-});
+// // ❗Fallback for SPA (must be after API routes)
+// app.use((req, res) => {
+//     res.sendFile(path.join(__dirname, './Frontend/dist', 'index.html'));
+// });
 
 // Start server
 const PORT = process.env.PORT || 5000;
