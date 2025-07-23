@@ -12,7 +12,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get("http://localhost/api/courses/courseslist");
+        const res = await axios.get("/api/courses/courseslist");
         setCourses(res.data.data || []);
       } catch (err) {
         toast.error("Failed to load courses");

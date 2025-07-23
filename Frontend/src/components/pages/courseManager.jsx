@@ -9,7 +9,7 @@ const CourseManager = () => {
   const [openMenuId, setOpenMenuId] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:80/api/courses/courseslist")
+    fetch("/api/courses/courseslist")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch courses");
         return res.json();

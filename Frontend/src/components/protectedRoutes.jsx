@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:80/api/admin/data", {
+      .get("/api/admin/data", {
         withCredentials: true,
       })
       .then(() => setIsAuth(true))
