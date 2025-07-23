@@ -8,7 +8,7 @@
     "seedAdmin": "nodemon Backend/Scripts/SeedingAdmin.js",
     "dev": "nodemon --env-file=.env main.js ",
     "build:frontend": "cd Frontend && npm install && npm run build",
-    "start": "node main.js"
+    "start": "node --env-file=.env main.js"
   },
   "keywords": [],
   "author": "",
