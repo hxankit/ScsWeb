@@ -13,7 +13,7 @@ const CourseDetails = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`/api/courses/course/${id}`);
+        const res = await axios.get(`/courses/course/${id}`);
         setCourse(res.data.data);
       } catch (err) {
         toast.error("Failed to load course details");
@@ -60,7 +60,7 @@ const CourseDetails = () => {
 
       {/* Thumbnail */}
       <img
-        src={`/${course.thumbnail}`}
+        src={`https://scstechnologies.in/${course.thumbnail}`}
         alt={course.title}
         className="w-full max-w-4xl h-72 object-cover rounded-lg mb-6 shadow-md"
       />
