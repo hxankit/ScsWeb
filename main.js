@@ -7,10 +7,12 @@ import contactRouter from './Backend/routes/contact.routes.js';
 import coursesRouter from './Backend/routes/courses.routes.js';
 import adminRouter from './Backend/routes/Admin.routes.js';
 import { connectdb } from './Backend/middlewars/connect.db.js';
+import dotenv from "dotenv"
 
 const app = express()
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+dotenv.config()
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,7 +26,6 @@ app.use(cors({
 }));
 
 // Static files from Frontend build
-app.use(express.static(path.join(__dirname, './Frontend/dist')));
 
 // APIs
 app.use("/api/admin/",adminRouter)
@@ -34,6 +35,7 @@ app.use("/api/courses", coursesRouter);
 app.get("/test", (req, res) => {
     res.json("This is Server");
 });
+app.use(express.static(path.join(__dirname, './Frontend/dist')));
 
 // ❗Fallback for SPA (must be after API routes)
 app.use((req, res) => {
