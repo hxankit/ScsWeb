@@ -8,7 +8,7 @@ const seedAdmin = async () => {
 
 
     await mongoose.connect(process.env.MONGO_URI)
-    const existingAdmin = await adminModel.find({username:username})
+    const existingAdmin = await adminModel.findOne({username:username})
     if (!existingAdmin) {
         console.log(username)
         const pass = process.env.ADMIN_PASSWORD
