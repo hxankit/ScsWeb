@@ -25,6 +25,10 @@ const courseSchema = new mongoose.Schema(
       enum: ["Beginner", "Intermediate", "Advanced"],
       default: "Beginner",
     },
+    price:{
+      type:Number,
+      required:true
+    },
     syllabus: [
       {
         title: String,

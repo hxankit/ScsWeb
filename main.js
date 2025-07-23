@@ -14,12 +14,12 @@ const __dirname = path.dirname(__filename);
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use('/uploads', express.static(path.join(process.cwd(), 'Backend/uploads')));
 // CORS
 app.use(cookieParser())
 app.use(cors({
     origin: 'http://localhost:5173',
-    methods: ['GET', 'POST'],
+    
     credentials: true,
 }));
 
@@ -27,7 +27,7 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, './Frontend/dist')));
 
 // APIs
-app.use("/api",adminRouter)
+app.use("/api/admin/",adminRouter)
 app.use("/api/", contactRouter);
 app.use("/api/courses", coursesRouter);
 
@@ -36,13 +36,13 @@ app.get("/test", (req, res) => {
 });
 
 // ❗Fallback for SPA (must be after API routes)
-// app.use((req, res) => {
-//     res.sendFile(path.join(__dirname, './Frontend/dist', 'index.html'));
-// });
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, './Frontend/dist', 'index.html'));
+});
 
 // Start server
 const PORT = process.env.PORT || 5000;
-console.log(process.env.PORT)
+
 connectdb()
     .then(() => {
         app.listen(PORT, () => {

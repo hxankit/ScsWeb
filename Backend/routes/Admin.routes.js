@@ -1,7 +1,10 @@
 import { Router } from "express";
-import { adminLogin } from "../controllers/admin.controller.js";
+import { adminData, adminLogin, adminLogout } from "../controllers/admin.controller.js";
+import { AdminAuth } from "../middlewars/adminAuth.js";
 const router =Router()
 
-router.route("/admin").post(adminLogin)
+router.route("/login").post(adminLogin)
+router.route("/data").get(AdminAuth,adminData)
+router.route("/logout").get(AdminAuth,adminLogout)
 
 export default router 
