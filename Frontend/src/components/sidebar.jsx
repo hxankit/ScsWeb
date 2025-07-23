@@ -10,7 +10,7 @@ const Sidebar = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get("http://localhost:8000/api/admin/logout", {
+      const res = await axios.get("http://localhost:80/api/admin/logout", {
         withCredentials: true,
       });
 
