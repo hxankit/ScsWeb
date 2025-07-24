@@ -14,7 +14,7 @@ const LoginPage = () => {
 
     try {
       const res = await axios.post(
-        "/api/admin/login", // your login API
+        "http://localhost:8000/api/admin/login", // your login API
         { username, password },
         { withCredentials: true }
       );

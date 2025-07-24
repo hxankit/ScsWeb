@@ -1,23 +1,28 @@
 import Course from "../models/courses.model.js"
 import fs from 'fs';
 import path from 'path';
+import cloudinary from "../utils/cloudinary.js";
+import { getDataUri } from "../utils/dataUri.js";
+
 
 export const getCoursesList = async (req, res) => {
    try {
     
-    const courseData=await Course.find()
+    const courseData=await Course.find() 
     if(!courseData){
         return res.status(400).json("Courses Not Available")
-    }
+    }    
     return res.status(200).json({
         message:"Courses Fetched succesfully",
         data:courseData
-    })
+    })    
     return res.json("Working Courses controller")
    } catch (error) {
-    return res.json(`Error while getting the course list ${error.message}`)
-   }
-}
+    return res.json(`Error while getting the course list ${error.message}`) 
+   } 
+}   
+
+
 export const addCourse = async (req, res) => {
   try {
     const {
@@ -31,7 +36,6 @@ export const addCourse = async (req, res) => {
       isPublished
     } = req.body;
 
-    // Check for uploaded file
     const file = req.file;
     if (!file) {
       return res.status(400).json({
@@ -40,10 +44,9 @@ export const addCourse = async (req, res) => {
       });
     }
 
-    // Validate required fields
+    // typeof syllabus === "undefined" || typeof isPublished === "undefined"
     if (
-      !title || !description || !category || !duration || !level || !price ||
-      typeof syllabus === "undefined" || typeof isPublished === "undefined"
+      !title || !description || !category || !duration || !level || !price 
     ) {
       return res.status(400).json({
         success: false,
@@ -51,21 +54,24 @@ export const addCourse = async (req, res) => {
       });
     }
 
-    // Parse syllabus if sent as a string (e.g., from Postman or frontend)
-    let parsedSyllabus = syllabus;
-    if (typeof syllabus === "string") {
-      try {
-        parsedSyllabus = JSON.parse(syllabus);
-        if (!Array.isArray(parsedSyllabus)) throw new Error("Syllabus must be an array");
-      } catch (parseErr) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid syllabus format. Must be an array of objects.",
-        });
-      }
-    }
+    // let parsedSyllabus = syllabus;
+    // if (typeof syllabus === "string") {
+    //   try {
+    //     parsedSyllabus = JSON.parse(syllabus);
+    //     if (!Array.isArray(parsedSyllabus)) throw new Error("Syllabus must be an array");
+    //   } catch (err) {
+    //     return res.status(400).json({
+    //       success: false,
+    //       message: "Invalid syllabus format. Must be an array of objects.",
+    //     });
+    //   }
+    // }
 
-    // Build course object
+    const fileUri = getDataUri(file);
+    const cloudinaryResponse = await cloudinary.uploader.upload(fileUri.content, {
+      folder: "courses"
+    });
+
     const newCourse = await Course.create({
       title,
       description,
@@ -74,9 +80,9 @@ export const addCourse = async (req, res) => {
       level,
       price,
       isPublished,
-      syllabus: parsedSyllabus,
-      thumbnail: `/uploads/thumbnails/${file.filename}`
+      thumbnail: cloudinaryResponse.secure_url
     });
+    // syllabus: parsedSyllabus,
 
     return res.status(201).json({
       success: true,
@@ -92,7 +98,9 @@ export const addCourse = async (req, res) => {
     });
   }
 };
-export const getCourseList=async (req,res)=>{
+
+
+export const getCourse=async (req,res)=>{
     try {
         const courseId=req.params.id
         const course=await Course.findById(courseId)
@@ -113,6 +121,7 @@ export const getCourseList=async (req,res)=>{
     }
 
 }
+
 export const deleteCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
@@ -122,17 +131,19 @@ export const deleteCourse = async (req, res) => {
       return res.status(404).json({ message: "Course not found" });
     }
 
-    // Delete thumbnail from filesystem
+    // Delete thumbnail from Cloudinary
     if (course.thumbnail) {
-      const imagePath = path.join('Backend/', course.thumbnail);
+      // Extract public_id from the thumbnail URL
+      const urlParts = course.thumbnail.split('/');
+      const fileName = urlParts[urlParts.length - 1];
+      const publicId = `courses/${fileName.split('.')[0]}`;
 
-      fs.unlink(imagePath, (err) => {
-        if (err) {
-          console.error("Image deletion error:", err.message);
-        } else {
-          console.log("Thumbnail deleted:", course.thumbnail);
-        }
-      });
+      try {
+        await cloudinary.uploader.destroy(publicId);
+        console.log("Cloudinary thumbnail deleted:", publicId);
+      } catch (cloudErr) {
+        console.error("Cloudinary deletion error:", cloudErr.message);
+      }
     }
 
     // Delete the course from DB
