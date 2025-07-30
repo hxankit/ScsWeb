@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/admin/data", {
+      .get(`${import.meta.env.VITE_API_URL}/api/admin/data`, {
         withCredentials: true,
       })
       .then(() => setIsAuth(true))
@@ -19,4 +19,5 @@ const ProtectedRoute = ({ children }) => {
 
   return isAuth ? children : <Navigate to="/admin" />;
 };
+
 export default ProtectedRoute;

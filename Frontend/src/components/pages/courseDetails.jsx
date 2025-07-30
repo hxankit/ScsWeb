@@ -13,7 +13,7 @@ const CourseDetails = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/courses/course/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses/course/${id}`);
         
         setCourse(res.data.data);
       } catch (err) {

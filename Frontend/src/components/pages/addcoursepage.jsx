@@ -50,7 +50,7 @@ const AddCourse = () => {
             formData.append('syllabus', JSON.stringify(course.syllabus));
             if (thumbnail) formData.append('file', thumbnail); // 'file' must match multer field name
 
-            const res = await axios.post('http://localhost:8000/api/courses/addcourse', formData, {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/courses/addcourse`, formData, {
                 withCredentials: true,
                 headers: { 'Content-Type': 'multipart/form-data' },
             });

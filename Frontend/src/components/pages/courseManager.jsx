@@ -1,6 +1,6 @@
-// src/components/admin/CourseManager.jsx
 import React, { useState, useEffect } from "react";
 import { MoreVertical } from "lucide-react";
+import axios from "axios";
 
 const CourseManager = () => {
   const [courses, setCourses] = useState([]);
@@ -9,29 +9,42 @@ const CourseManager = () => {
   const [openMenuId, setOpenMenuId] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/courses/courseslist")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch courses");
-        return res.json();
-      })
-      .then((data) => {
-        setCourses(data?.courses || data); // Adjust depending on response shape
+    const fetchCourses = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses/courseslist`, {
+          withCredentials: true,
+        });
+        setCourses(res.data?.courses || res.data); // Adjust based on your API response
         setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
+      } catch (err) {
+        setError(err.response?.data?.message || err.message);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchCourses();
   }, []);
 
   const handleEdit = (id) => {
     console.log("Edit course", id);
-    // TODO: Add your update modal/form logic
+    // TODO: Show edit modal / form
   };
 
-  const handleDelete = (id) => {
-    console.log("Delete course", id);
-    // TODO: Call delete API
+  const handleDelete = async (id) => {
+    try {
+      const confirm = window.confirm("Are you sure you want to delete this course?");
+      if (!confirm) return;
+
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/courses/${id}`, {
+        withCredentials: true,
+      });
+
+      setCourses((prev) => prev.filter((course) => course._id !== id));
+      alert("Course deleted successfully!");
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("Failed to delete course.");
+    }
   };
 
   const toggleMenu = (id) => {

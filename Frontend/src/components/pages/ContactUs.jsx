@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../Navbar";
+import axios from "axios";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -17,13 +18,13 @@ const ContactPage = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`http://localhost:8000/api/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/contact`,
+        formData,
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+      );
 
-      if (res.ok) {
+      if (res.status === 200) {
         alert("Message sent and saved to Excel!");
         setFormData({ name: "", email: "", mobile: "", message: "" });
       } else {
@@ -31,6 +32,7 @@ const ContactPage = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      alert("Failed to send message. Try again later.");
     }
   };
 
