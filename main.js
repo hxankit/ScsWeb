@@ -66,8 +66,8 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 5000;
 connectdb()
   .then(() => {
-    app.listen(PORT, () => {
-      console.log(`🚀 Server is listening on http://localhost:${PORT}`);
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server is Listening on http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
