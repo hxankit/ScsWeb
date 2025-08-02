@@ -1,80 +1,75 @@
-// main.js
-
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
-
-import hpp from 'hpp';
-import path, { dirname, join } from 'path';
-import cookieParser from 'cookie-parser';
+import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
+import helmet from 'helmet';
+import hpp from 'hpp';
+import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
+
 import contactRouter from './Backend/routes/contact.routes.js';
 import coursesRouter from './Backend/routes/courses.routes.js';
-import adminRouter from './Backend/routes/Admin.routes.js';
 import { connectdb } from './Backend/middlewars/connect.db.js';
 
 dotenv.config();
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 // ---------- Security Middlewares ----------
-// Secure HTTP headers
-app.use(helmet());
+app.use(helmet());                  // Sets security-related HTTP headers
+app.use(hpp());                     // Prevents HTTP Parameter Pollution
+app.use(cookieParser());            // Parses cookies
+app.use(cors({                      // Enables CORS for frontend
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST'],
+  credentials: true,
+}));
 
-// Prevent XSS attacks
-
-// Prevent HTTP parameter pollution
-app.use(hpp());
-
-// Rate Limiting
+// ---------- Rate Limiting ----------
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again later."
+  windowMs: 15 * 60 * 1000,         // 15 minutes
+  max: 100,                         // limit each IP to 100 requests per windowMs
+  message: 'Too many requests, please try again later.',
 });
 app.use('/api', limiter);
 
-// ---------- General Middlewares ----------
+// ---------- Body Parsers ----------
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
-// CORS
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+// ---------- Serve Frontend Dist ----------
+app.use(express.static(path.join(__dirname, './Frontend/dist')));
 
-// Serve static uploads (images/docs/etc.)
-app.use('/uploads', express.static(path.join(process.cwd(), 'Backend/uploads')));
-
-
-// ---------- Routes ----------
-app.use('/api/admin', adminRouter);
+// ---------- API Routes ----------
 app.use('/api', contactRouter);
 app.use('/api/courses', coursesRouter);
 
 // ---------- Test Route ----------
 app.get('/test', (req, res) => {
-  res.json({ message: '✅ Server is secure and running' });
+  res.json('This is Server');
+});
+
+// ---------- Fallback for SPA ----------
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, './Frontend/dist', 'index.html'), (err) => {
+    if (err) {
+      res.status(500).send('Error loading frontend');
+    }
+  });
 });
 
 // ---------- Start Server ----------
-const PORT = process.env.PORT || 8000;
-
+const PORT = process.env.PORT || 5000;
 connectdb()
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`🚀 Server listening at http://localhost:${PORT}`);
+      console.log(`🚀 Server is listening on http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
-    console.error('❌ Database connection failed:', err.message);
+    console.error('❌ Failed to connect to DB:', err.message);
   });

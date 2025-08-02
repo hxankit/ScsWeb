@@ -10,7 +10,7 @@ const Sidebar = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/logout`, {
+      const res = await axios.get(`/api/admin/logout`, {
         withCredentials: true,
       });
 

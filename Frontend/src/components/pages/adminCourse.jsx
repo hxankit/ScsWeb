@@ -13,7 +13,7 @@ const CourseManager = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses/courseslist`, {
+        const res = await axios.get(`/api/courses/courseslist`, {
           withCredentials: true,
         });
         setCourses(res.data?.data || []);
@@ -35,7 +35,7 @@ const CourseManager = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/courses/deletecourse/${id}`, {
+      await axios.delete(`/api/courses/deletecourse/${id}`, {
         withCredentials: true,
       });
       toast.success("Course deleted successfully!");

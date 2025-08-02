@@ -14,7 +14,7 @@ const LoginPage = () => {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/admin/login`, // your login API
+        `/api/admin/login`, // your login API
         { username, password },
         { withCredentials: true }
       );

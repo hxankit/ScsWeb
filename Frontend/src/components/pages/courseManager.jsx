@@ -11,7 +11,7 @@ const CourseManager = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses/courseslist`, {
+        const res = await axios.get(`/api/courses/courseslist`, {
           withCredentials: true,
         });
         setCourses(res.data?.courses || res.data); // Adjust based on your API response
@@ -35,7 +35,7 @@ const CourseManager = () => {
       const confirm = window.confirm("Are you sure you want to delete this course?");
       if (!confirm) return;
 
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/courses/${id}`, {
+      await axios.delete(`/api/courses/${id}`, {
         withCredentials: true,
       });
 

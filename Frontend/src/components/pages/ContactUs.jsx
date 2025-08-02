@@ -19,7 +19,7 @@ const ContactPage = () => {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/contact`,
+        `/api/contact`,
         formData,
         { headers: { "Content-Type": "application/json" }, withCredentials: true }
       );
