@@ -10,6 +10,7 @@ import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 
 import contactRouter from './Backend/routes/contact.routes.js';
+import adminRouter from './Backend/routes/Admin.routes.js'
 import coursesRouter from './Backend/routes/courses.routes.js';
 import { connectdb } from './Backend/middlewars/connect.db.js';
 
@@ -50,10 +51,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ---------- Serve Frontend Dist ----------
-// app.use(express.static(path.join(__dirname, './Frontend/dist')));
+// yy
 
 // ---------- API Routes ----------
 app.use('/api', contactRouter);
+app.use('/api/admin',adminRouter)
 app.use('/api/courses', coursesRouter);
 
 // ---------- Test Route ----------

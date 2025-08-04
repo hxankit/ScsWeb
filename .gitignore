@@ -12,6 +12,7 @@ npm-debug.log*
 
 # Environment variables
 /.env
+.env
 /Frontend/.env
 
 # OS-specific
