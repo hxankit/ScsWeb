@@ -25,7 +25,7 @@ const ContactPage = () => {
       );
 
       if (res.status === 200) {
-        alert("Message sent and saved to Excel!");
+        alert("Message sent ");
         setFormData({ name: "", email: "", mobile: "", message: "" });
       } else {
         alert("Something went wrong.");
