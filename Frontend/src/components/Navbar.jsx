@@ -18,24 +18,26 @@ export default function Navbar() {
     <nav className="bg-white border-b shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3">
         
-        {/* Logo */}
-        <div className="flex-shrink-0">
+        {/* Logo and Brand Name */}
+        <div className="flex items-center gap-2">
           <Link to="/">
-            <img
-              src="/img/logo.png"
-              alt="Logo"
-              className="h-10 w-auto"
-            />
+            <img src="/img/logo.png" alt="Logo" className="h-10 w-auto" />
           </Link>
+
+          {/* Brand Name (Desktop Only) */}
+          <span className="hidden md:inline-block text-xl font-bold text-blue-700 tracking-wide">
+            <span className="text-gray-900">SCS</span>
+            <span className="text-blue-600">Technologies</span>
+          </span>
         </div>
 
-        {/* Desktop Menu */}
+        {/* Desktop Navigation Links */}
         <div className="hidden md:flex space-x-6">
           {navItems.map((item) => (
             <Link
               key={item.name}
               to={item.path}
-              className="text-gray-700 hover:text-blue-600 transition duration-200"
+              className="text-gray-700 hover:text-blue-600 transition duration-200 font-medium"
             >
               {item.name}
             </Link>
@@ -53,7 +55,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Items */}
+      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden px-4 pb-3 space-y-2 bg-white border-t">
           {navItems.map((item) => (
@@ -61,7 +63,7 @@ export default function Navbar() {
               key={item.name}
               to={item.path}
               className="block text-gray-700 hover:text-blue-600 transition duration-200"
-              onClick={() => setIsOpen(false)} // Close on click
+              onClick={() => setIsOpen(false)}
             >
               {item.name}
             </Link>
