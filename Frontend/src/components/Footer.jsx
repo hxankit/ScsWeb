@@ -37,11 +37,11 @@ const Footer = () => {
         <div>
           <h4 className="text-xl font-semibold text-white mb-4">Navigation</h4>
           <ul className="space-y-2 text-sm">
-            <li><a href="#home" className="hover:text-cyan-400">Home</a></li>
-            <li><a href="#about" className="hover:text-cyan-400">About</a></li>
-            <li><a href="#services" className="hover:text-cyan-400">Services</a></li>
-            <li><a href="#roadmap" className="hover:text-cyan-400">Why Us</a></li>
-            <li><a href="#contact" className="hover:text-cyan-400">Contact</a></li>
+            <li><Link to="/home" className="hover:text-cyan-400">Home</Link></li>
+            <li><Link to="/about" className="hover:text-cyan-400">About</Link></li>
+            <li><Link to="/services" className="hover:text-cyan-400">Services</Link></li>
+            {/* <li><a href="#roadmap" className="hover:text-cyan-400">Why Us</a></li> */}
+            <li><Link to="/contact" className="hover:text-cyan-400">Contact</Link></li>
           </ul>
         </div>
 
@@ -60,7 +60,7 @@ const Footer = () => {
         <div>
           <h4 className="text-xl font-semibold text-white mb-4">Contact</h4>
           <ul className="space-y-3 text-sm">
-            <li className="flex items-center gap-3"><FaMapMarkerAlt /> Ghaziabad, UP, India</li>
+            <li className="flex items-center gap-3"><FaMapMarkerAlt /> Noida, UP, India</li>
             <li className="flex items-center gap-3"><FaPhoneAlt /> +91 7599828342</li>
             <li className="flex items-center gap-3"><FaEnvelope /> info@scstechnologies.in</li>
           </ul>

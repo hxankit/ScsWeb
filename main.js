@@ -29,7 +29,7 @@ app.use(cors({
   origin: [
     'http://scstechnologies.in',
     'https://scstechnologies.in',
-    'http://4.174.129.147',
+    'http://www.scstechnologies.in',
     'https://4.174.129.147',
     'http://localhost:5173'
   ],

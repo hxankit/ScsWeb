@@ -1,11 +1,11 @@
-// src/pages/CourseDetails.jsx
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 const CourseDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [enrolling, setEnrolling] = useState(false);
@@ -14,7 +14,6 @@ const CourseDetails = () => {
     const fetchCourse = async () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses/course/${id}`);
-        
         setCourse(res.data.data);
       } catch (err) {
         toast.error("Failed to load course details");
@@ -28,9 +27,8 @@ const CourseDetails = () => {
   const handleEnroll = async () => {
     setEnrolling(true);
     try {
-      // Add real API call to enroll the user here
-      // await axios.post(`/api/enroll`, { courseId: id, userId: ... })
-      toast.success("we will be here soon");
+      // await axios.post('/api/enroll', { courseId: id })
+      toast.success("We will be here soon");
     } catch (error) {
       toast.error("Enrollment failed.");
     } finally {
@@ -56,6 +54,14 @@ const CourseDetails = () => {
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate(-1)}
+        className="mb-4 text-blue-600 hover:text-blue-800 font-medium underline"
+      >
+        ← Back
+      </button>
+
       {/* Title */}
       <h1 className="text-3xl font-bold mb-4 text-blue-800">{course.title}</h1>
 
