@@ -54,18 +54,18 @@ export const addCourse = async (req, res) => {
       });
     }
 
-    // let parsedSyllabus = syllabus;
-    // if (typeof syllabus === "string") {
-    //   try {
-    //     parsedSyllabus = JSON.parse(syllabus);
-    //     if (!Array.isArray(parsedSyllabus)) throw new Error("Syllabus must be an array");
-    //   } catch (err) {
-    //     return res.status(400).json({
-    //       success: false,
-    //       message: "Invalid syllabus format. Must be an array of objects.",
-    //     });
-    //   }
-    // }
+    let parsedSyllabus = syllabus;
+    if (typeof syllabus === "string") {
+      try {
+        parsedSyllabus = JSON.parse(syllabus);
+        if (!Array.isArray(parsedSyllabus)) throw new Error("Syllabus must be an array");
+      } catch (err) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid syllabus format. Must be an array of objects.",
+        });
+      }
+    }
 
     const fileUri = getDataUri(file);
     const cloudinaryResponse = await cloudinary.uploader.upload(fileUri.content, {
@@ -80,9 +80,9 @@ export const addCourse = async (req, res) => {
       level,
       price,
       isPublished,
+      syllabus: parsedSyllabus,
       thumbnail: cloudinaryResponse.secure_url
     });
-    // syllabus: parsedSyllabus,
 
     return res.status(201).json({
       success: true,
