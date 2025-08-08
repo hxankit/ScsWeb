@@ -27,8 +27,8 @@ function App() {
         <Route path="/about" element={<AboutSection />} />
         <Route path="/contact" element={<ContactSection />} />
         <Route path="/services" element={<ServicesPage />} />
-        <Route path="/courses" element={<Courses />}  />
-         <Route path="/courses/:id" element={<CourseDetails />} />
+        {/* <Route path="/courses" element={<Courses />}  /> */}
+         {/* <Route path="/courses/:id" element={<CourseDetails />} /> */}
         
         <Route path="/training" element={<ComingSoon />} />
         <Route path="/admin" element={<LoginPage />} />
