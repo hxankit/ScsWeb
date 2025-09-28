@@ -50,13 +50,13 @@ const ContactPage = () => {
               <div>
                 <h2 className="text-xl font-semibold text-gray-700">Address</h2>
                 <p className="text-gray-600">
-                  SCS Technologies Pvt. Ltd. <br />
-                  Ghaziabad, Uttar Pradesh - 201301
+                 Scs technologies<br/>
+                  Near KIET College, Muradnagar, Ghaziabad, Uttar Pradesh - 201206
                 </p>
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-gray-700">Phone</h2>
-                <p className="text-gray-600">+91 7599828342</p>
+                <p className="text-gray-600">+91 7983509548</p>
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-gray-700">Email</h2>

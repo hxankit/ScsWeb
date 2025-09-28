@@ -17,6 +17,7 @@ import CourseManager from './components/pages/adminCourse';
 import AddCourse from './components/pages/addcoursepage';
 import Courses from './components/pages/courses';
 import CourseDetails from './components/pages/courseDetails';
+import Careers from './components/pages/careerpage';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
         <Route path="/about" element={<AboutSection />} />
         <Route path="/contact" element={<ContactSection />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/careers" element={<Careers />} />
+        
         {/* <Route path="/courses" element={<Courses />}  /> */}
          {/* <Route path="/courses/:id" element={<CourseDetails />} /> */}
         

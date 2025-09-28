@@ -1,5 +1,6 @@
 // src/components/Footer.jsx
 import React from 'react';
+import { SiWhatsapp } from 'react-icons/si';
 import {
   FaFacebookF,
   FaInstagram,
@@ -27,9 +28,10 @@ const Footer = () => {
             Transforming your business with modern tech, branding, and secure development.
           </p>
           <div className="flex gap-4 mt-4">
-            <a href="#" className="hover:text-blue-400 transition-all"><FaFacebookF /></a>
-            <a href="#" className="hover:text-pink-400 transition-all"><FaInstagram /></a>
-            <a href="#" className="hover:text-blue-300 transition-all"><FaLinkedinIn /></a>
+            {/* <a href="" className="hover:text-blue-400 transition-all"><FaFacebookF /></a> */}
+            <a href="https://www.linkedin.com/company/social-cloud-services-technologies/?viewAsMember=true" className="hover:text-blue-300 transition-all"><FaLinkedinIn /></a>
+            <a href="https://wa.me/7983509548?text=Hi%20Team" className="hover:text-blue-300 transition-all"><SiWhatsapp /></a>
+            <a href="https://www.instagram.com/scstechnologies.in?igsh=MTlhMDVvMmkzdDJwZQ==" className="hover:text-pink-400 transition-all"><FaInstagram /></a>
           </div>
         </div>
 
@@ -60,8 +62,8 @@ const Footer = () => {
         <div>
           <h4 className="text-xl font-semibold text-white mb-4">Contact</h4>
           <ul className="space-y-3 text-sm">
-            <li className="flex items-center gap-3"><FaMapMarkerAlt /> Noida, UP, India</li>
-            <li className="flex items-center gap-3"><FaPhoneAlt /> +91 7599828342</li>
+            <li className="flex items-center gap-3"><FaMapMarkerAlt /> Scs technologies, Near KIET College, Muradnagar, Ghaziabad, Uttar Pradesh - 201206 India</li>
+            <li className="flex items-center gap-3"><FaPhoneAlt /> +91 7983509548</li>
             <li className="flex items-center gap-3"><FaEnvelope /> info@scstechnologies.in</li>
           </ul>
         </div>

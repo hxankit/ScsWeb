@@ -8,11 +8,11 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Home", path: "/" },
+    { name: "About Us", path: "/about" },
     { name: "Services", path: "/services" },
     { name: "Contact", path: "/contact" },
-    // { name: "Courses", path: "/courses" },
+    { name: "Careers", path: "/careers" },
     { name: "Training", path: "/training" },
-    { name: "About Us", path: "/about" },
   ];
 
   const isActive = (path) => location.pathname === path;

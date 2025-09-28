@@ -7,6 +7,7 @@ import IndustriesSection from '../IndustriesSection';
 import WhyChooseUs from '../WhyChooseUs';
 
 import Footer from '../Footer';
+import HotProductsAndStats from '../hotproductsAndstatcts';
 function Home() {
   return (
     <div>
@@ -15,6 +16,7 @@ function Home() {
       <AboutSection/>
       <ServicesSection/>
       <IndustriesSection/>
+      <HotProductsAndStats/>
       <WhyChooseUs/>
       {/* <ClientTestimonials/> */}
       <Footer/>
