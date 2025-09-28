@@ -12,7 +12,7 @@ const Careers = () => {
                 id: 1,
                 title: "Software Engineer",
                 department: "Engineering",
-                location: "Remote / Bangalore, India",
+                location: "Noida / Bangalore, India",
                 description:
                     "We are looking for passionate software engineers skilled in JavaScript, React, and Node.js to build scalable web applications.",
             },
@@ -20,7 +20,7 @@ const Careers = () => {
                 id: 2,
                 title: "Digital Marketing Specialist",
                 department: "Marketing",
-                location: "Gurgaon, India",
+                location: "Noida, India",
                 description:
                     "Plan and execute digital marketing campaigns, manage SEO/SEM, and run social media ads to grow our brand presence.",
             },
